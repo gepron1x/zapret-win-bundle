@@ -1,3 +1,7 @@
 googlevideo.com
-youtubei.googleapis.com
-i.ytimg.com
+googleapis.com
+youtube.com
+youtu.be
+ggpht.com
+ytimg.com
+gvt1.com

@@ -1,0 +1,28 @@
+* checking system
+CYGWIN detected
+firewall type is windivert
+* checking already running zapret processes
+!!! WARNING. some dpi bypass processes already running !!!
+!!! WARNING. blockcheck requires all DPI bypass methods disabled !!!
+!!! WARNING. pls stop all dpi bypass instances that may interfere with blockcheck !!!
+* checking prerequisites
+* checking DNS
+system DNS is working
+comparing system resolver to public DNS : 8.8.8.8
+pornhub.com : OK
+ntc.party : OK
+rutracker.org : OK
+www.torproject.org : OK
+bbc.com : OK
+checking resolved IP uniqueness for : pornhub.com ntc.party rutracker.org www.torproject.org bbc.com
+censor's DNS can return equal result for multiple blocked domains.
+all resolved IPs are unique
+-- DNS looks good
+-- NOTE this check is Russia targeted. In your country other domains may be blocked.
+* checking virtualization
+cannot detect
+
+NOTE ! this test should be run with zapret or any other bypass software disabled, without VPN
+
+specify domain(s) to test. multiple domains are space separated.
+domain(s) (default: rutracker.org) : 

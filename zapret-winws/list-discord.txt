@@ -4,3 +4,10 @@ discord.media
 discordapp.com
 googleapis.com
 discordapp.net
+discordcdn.com
+discord.dev
+discord.new
+discord.gift
+discordstatus.com
+dis.gd
+discord.co

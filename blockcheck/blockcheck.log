@@ -1,0 +1,190 @@
+* checking system
+CYGWIN detected
+kernel: CYGWIN_NT-10.0-26100 version 3.4.10-1.x86_64 (runneradmin@fv-az1212-175) (gcc version 11.4.0 (GCC) ) 2023-11-29 12:12 UTC
+firewall type is windivert
+CURL=curl
+curl 8.10.1 (x86_64-pc-cygwin) libcurl/8.10.1 OpenSSL/3.4.0 zlib/1.3.1 zstd/1.5.5 nghttp2/1.61.0 nghttp3/1.6.0
+Release-Date: 2024-09-18
+Protocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp ws wss
+Features: alt-svc AsynchDNS HSTS HTTP2 HTTP3 HTTPS-proxy IPv6 Largefile libz NTLM SSL threadsafe TLS-SRP UnixSockets zstd
+* checking already running DPI bypass processes
+* checking prerequisites
+* checking DNS
+system DNS is working
+comparing system resolver to public DNS : 8.8.8.8
+pornhub.com : OK
+ntc.party : OK
+rutracker.org : OK
+www.torproject.org : OK
+bbc.com : OK
+checking resolved IP uniqueness for : pornhub.com ntc.party rutracker.org www.torproject.org bbc.com
+censor's DNS can return equal result for multiple blocked domains.
+all resolved IPs are unique
+-- DNS looks good
+-- NOTE this check is Russia targeted. In your country other domains may be blocked.
+* checking virtualization
+cannot detect
+
+NOTE ! this test should be run with zapret or any other bypass software disabled, without VPN
+
+specify domain(s) to test. multiple domains are space separated.
+domain(s) (default: rutracker.org) : ip protocol version(s) - 4, 6 or 46 for both (default: 4) : 
+check http (default : Y) (Y/N) ? 
+check https tls 1.2 (default : Y) (Y/N) ? 
+TLS 1.3 uses encrypted ServerHello. DPI cannot check domain name in server response.
+This can allow more bypass strategies to work.
+What works for TLS 1.2 will also work for TLS 1.3 but not vice versa.
+Most sites nowadays support TLS 1.3 but not all. If you can't find a strategy for TLS 1.2 use this test.
+TLS 1.3 only strategy is better than nothing.
+check https tls 1.3 (default : N) (Y/N) ? 
+make sure target domain(s) support QUIC or result will be negative in any case
+check http3 QUIC (default : Y) (Y/N) ? 
+sometimes ISPs use multiple DPIs or load balancing. bypass strategies may work unstable.
+how many times to repeat each test (default: 1) : 
+quick - scan as fast as possible to reveal any working strategy
+standard - do investigation what works on your DPI
+force - scan maximum despite of result
+1 : quick
+2 : standard
+3 : force
+your choice (default : standard) : selected : quick
+
+
+* port block tests ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com:443
+nc -z -w 2 212.188.7.16 443
+Connection to 212.188.7.16 443 port [tcp/https] succeeded!
+212.188.7.16 connects
+
+* curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com
+- checking without DPI bypass
+curl: (28) Connection timed out after 2015 milliseconds
+UNAVAILABLE code=28
+
+- IP block tests (requires manual interpretation)
+> testing iana.org on it's original ip
+!!!!! AVAILABLE !!!!!
+> testing rr5---sn-jvhnu5g-gv8e.googlevideo.com on 192.0.43.8 (iana.org)
+curl: (28) Connection timed out after 2015 milliseconds
+> testing iana.org on 212.188.7.16 (rr5---sn-jvhnu5g-gv8e.googlevideo.com)
+curl: (28) Connection timed out after 2016 milliseconds
+
+preparing winws redirection
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=2
+curl: (28) Connection timed out after 2009 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=1
+curl: (28) Connection timed out after 2002 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=sniext+1
+curl: (28) Connection timed out after 2015 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=sniext+4
+curl: (28) Connection timed out after 2006 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=host+1
+curl: (28) Connection timed out after 2005 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=midsld
+curl: (28) Connection timed out after 2013 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=1,midsld
+curl: (28) Connection timed out after 2010 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multisplit --dpi-desync-split-pos=1,sniext+1,host+1,midsld-2,midsld,midsld+2,endhost-1
+curl: (28) Connection timed out after 2005 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=2
+curl: (28) Connection timed out after 2016 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=1
+curl: (28) Connection timed out after 2013 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=sniext+1
+curl: (28) Connection timed out after 2029 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=sniext+4
+curl: (28) Connection timed out after 2002 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=host+1
+curl: (28) Connection timed out after 2012 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=midsld
+curl: (28) Connection timed out after 2017 milliseconds
+UNAVAILABLE code=28
+- curl_test_https_tls12 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=1,midsld
+!!!!! AVAILABLE !!!!!
+
+!!!!! curl_test_https_tls12: working strategy found for ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --dpi-desync=multidisorder --dpi-desync-split-pos=1,midsld !!!!!
+
+clearing winws redirection
+
+* curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com
+- checking without DPI bypass
+curl: (28) Connection timed out after 2001 milliseconds
+UNAVAILABLE code=28
+
+preparing winws redirection
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake
+curl: (28) Connection timed out after 2005 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-repeats=2
+curl: (28) Connection timed out after 2015 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-repeats=5
+curl: (28) Connection timed out after 2010 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-repeats=10
+curl: (28) Connection timed out after 2015 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-repeats=20
+curl: (28) Connection timed out after 2002 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-fake-quic=/cygdrive/c/Users/gepron1x/portable/zapret-win-bundle/blockcheck/zapret/files/fake/quic_initial_www_google_com.bin
+curl: (28) Connection timed out after 2005 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-fake-quic=/cygdrive/c/Users/gepron1x/portable/zapret-win-bundle/blockcheck/zapret/files/fake/quic_initial_www_google_com.bin --dpi-desync-repeats=2
+curl: (95) HTTP/3 stream 0 was closed cleanly, but before getting all response header fields, treated as error
+UNAVAILABLE code=95
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-fake-quic=/cygdrive/c/Users/gepron1x/portable/zapret-win-bundle/blockcheck/zapret/files/fake/quic_initial_www_google_com.bin --dpi-desync-repeats=5
+curl: (95) HTTP/3 stream 0 was closed cleanly, but before getting all response header fields, treated as error
+UNAVAILABLE code=95
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-fake-quic=/cygdrive/c/Users/gepron1x/portable/zapret-win-bundle/blockcheck/zapret/files/fake/quic_initial_www_google_com.bin --dpi-desync-repeats=10
+curl: (95) HTTP/3 stream 0 was closed cleanly, but before getting all response header fields, treated as error
+UNAVAILABLE code=95
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=fake --dpi-desync-fake-quic=/cygdrive/c/Users/gepron1x/portable/zapret-win-bundle/blockcheck/zapret/files/fake/quic_initial_www_google_com.bin --dpi-desync-repeats=20
+curl: (95) HTTP/3 stream 0 was closed cleanly, but before getting all response header fields, treated as error
+UNAVAILABLE code=95
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=ipfrag2 --dpi-desync-ipfrag-pos-udp=8
+curl: (28) Connection timed out after 2017 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=ipfrag2 --dpi-desync-ipfrag-pos-udp=16
+curl: (28) Connection timed out after 2001 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=ipfrag2 --dpi-desync-ipfrag-pos-udp=24
+curl: (28) Connection timed out after 2008 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=ipfrag2 --dpi-desync-ipfrag-pos-udp=32
+curl: (28) Connection timed out after 2015 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=ipfrag2 --dpi-desync-ipfrag-pos-udp=40
+curl: (28) Connection timed out after 2004 milliseconds
+UNAVAILABLE code=28
+- curl_test_http3 ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com : winws --wf-l3=ipv4 --wf-udp=443 --dpi-desync=ipfrag2 --dpi-desync-ipfrag-pos-udp=64
+curl: (28) Connection timed out after 2012 milliseconds
+UNAVAILABLE code=28
+
+curl_test_http3: winws strategy for ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com not found
+
+clearing winws redirection
+
+* SUMMARY
+ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com curl_test_https_tls12 : winws --wf-l3=ipv4 --wf-tcp=443 --dpi-desync=multidisorder --dpi-desync-split-pos=1,midsld
+ipv4 rr5---sn-jvhnu5g-gv8e.googlevideo.com curl_test_http3 : winws not working
+
+Please note this SUMMARY does not guarantee a magic pill for you to copy/paste and be happy.
+Understanding how strategies work is very desirable.
+This knowledge allows to understand better which strategies to prefer and which to avoid if possible, how to combine strategies.
+Blockcheck does it's best to prioritize good strategies but it's not bullet-proof.
+It was designed not as magic pill maker but as a DPI bypass test tool.
+
+press enter to continue
